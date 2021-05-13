@@ -1,0 +1,34 @@
+cmake_minimum_required(VERSION 3.16)
+project(ez-utils VERSION 1.0.0)
+
+# Check if this is a standalone project or included by other project
+if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+    set(EZ_UTILS_STANDALONE On)
+endif()
+
+include(GNUInstallDirs)
+
+include(compile-options.cmake)
+
+add_library(ez_utils INTERFACE)
+add_library(ez::utils ALIAS ez_utils)
+
+target_include_directories(ez_utils
+    INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/include>)
+
+target_link_libraries(ez_utils
+    INTERFACE
+    ez::utils::compile_options)
+
+if (EZ_UTILS_STANDALONE)
+    include(CTest)
+
+    if (BUILD_TESTING)
+        include(tests-config.cmake)
+        add_subdirectory(tests)
+    endif()
+endif()
+
+
