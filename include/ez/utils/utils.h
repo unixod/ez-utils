@@ -1,13 +1,9 @@
-#ifndef EZ_UTILS_CSTR_TO_UINT_H
-#define EZ_UTILS_CSTR_TO_UINT_H
+#ifndef EZ_UTILS_UTILS_H
+#define EZ_UTILS_UTILS_H
 
 #include <limits>
 #include <cassert>
 #include <type_traits>
-#include <string>
-#include <stdexcept>
-#include <fstream>
-#include <stdexcept>
 #include <numeric>
 
 namespace ez::utils {
@@ -56,9 +52,9 @@ template<typename T>
 const char* cstrToUint(const char *ptr, T& number) noexcept
 {
     assert(number == 0);
-    return cstrToUint_helper(ptr, number, /*processedDigitsCnt=*/0);
+    return details::cstrToUint_helper(ptr, number, /*processedDigitsCnt=*/0);
 }
 
 } // namespace ez::utils
 
-#endif // EZ_UTILS_CSTR_TO_UINT_H
+#endif // EZ_UTILS_UTILS_H
