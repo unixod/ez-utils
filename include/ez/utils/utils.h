@@ -8,15 +8,32 @@
 
 namespace ez::utils {
 
+/// A value based counterpart of std::make_signed_t
 template<typename T>
-constexpr auto makeUnsigned(T value) noexcept
+constexpr auto toSigned(T value) noexcept
 {
-    assert(value >= 0);
-    static_assert(std::is_integral<T>::value || std::is_enum<T>::value, "A value must be of either integral of enumeration type.");
-    static_assert(!std::is_same<T, bool>::value, "A value can't be boolean.");
-    return static_cast<std::make_unsigned_t<T>>(value);
+    static_assert(std::is_integral_v<T> || std::is_enum_v<T>,
+            "A value must be of either integral of enumeration type.");
+
+    static_assert(!std::is_same_v<T, bool>,
+            "A value can't be boolean.");
+
+    return static_cast<std::make_signed_t<T>>(value);
 }
 
+/// A value based counterpart of std::make_unsigned_t
+template<typename T>
+constexpr auto toUnsigned(T value) noexcept
+{
+    assert(value >= 0);
+    static_assert(std::is_integral_v<T> || std::is_enum_v<T>,
+            "A value must be of either integral of enumeration type.");
+
+    static_assert(!std::is_same_v<T, bool>,
+            "A value can't be boolean.");
+
+    return static_cast<std::make_unsigned_t<T>>(value);
+}
 
 namespace details {
 
@@ -30,7 +47,7 @@ const char* cstrToUint_helper(const char *ptr, T& number, const int processedDig
         return ptr;
     }
 
-    auto d = makeUnsigned(ch - '0');
+    auto d = toUnsigned(ch - '0');
 
     if (processedDigitsCnt < std::numeric_limits<T>::digits10) {
         number = static_cast<T>(number * 10);
@@ -48,6 +65,9 @@ const char* cstrToUint_helper(const char *ptr, T& number, const int processedDig
 
 } // namespace details
 
+/// A counterpart of std::ato* for unsigned integers with an ability to check for success.
+///
+/// In contrast to std::ato* this function returns a pointer to the input where parsing has stopped.
 template<typename T>
 const char* cstrToUint(const char *ptr, T& number) noexcept
 {
