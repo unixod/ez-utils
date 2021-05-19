@@ -9,7 +9,9 @@ include_guard()
 add_library(ez_utils_compile_options INTERFACE)
 add_library(ez::utils::compile_options ALIAS ez_utils_compile_options)
 
-if(MSVC)
+if(NOT EZ_UTILS_STANDALONE)
+    # use client defined options.
+elseif(MSVC)
     target_compile_options(ez_utils_compile_options
         INTERFACE
         /EHsc
@@ -17,7 +19,7 @@ if(MSVC)
         /WX
         /Zc:__cplusplus
     )
-elseif(EZ_UTILS_STANDALONE)
+else()
     target_compile_options(ez_utils_compile_options
         INTERFACE
         -Wall
