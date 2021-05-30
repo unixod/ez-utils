@@ -6,3 +6,7 @@ addTest("utils::toUnsigned" to_unsigned
 
 addTest("utils::cstrToUint" cstr_to_uint
     LIBS ez::utils ez::utils::tests_config)
+
+addTest("utils::enum_arithmetic" enum-arithmetic
+    LIBS ez::utils ez::utils::tests_config)
+

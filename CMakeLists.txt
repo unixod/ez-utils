@@ -30,6 +30,18 @@ endif()
 option(EZ_UTILS_INSTALL "Enable installation of ez-utils target" EZ_UTILS_STANDALONE)
 
 ##############################################################################
+# Fetch dependencies
+##############################################################################
+include(FetchContent)
+
+FetchContent_Declare(ez-support
+    GIT_REPOSITORY git@github.com:unixod/ez-support.git
+    GIT_TAG 3561b5d3ae027d90f9407c83760993979af4fdd1
+    GIT_SHALLOW On
+)
+FetchContent_MakeAvailable(ez-support)
+
+##############################################################################
 # Setup ez::utils target
 ##############################################################################
 include(compile-options.cmake)
@@ -44,7 +56,8 @@ target_include_directories(ez_utils
 
 target_link_libraries(ez_utils
     INTERFACE
-    ez::utils::compile_options)
+    ez::utils::compile_options
+    ez::support)
 
 if(EZ_SUPPORT_INSTALL)
     install(TARGETS ez_support)
