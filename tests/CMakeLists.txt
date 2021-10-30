@@ -10,3 +10,6 @@ addTest("utils::cstrToUint" cstr-to-uint
 addTest("utils::enum_arithmetic" enum-arithmetic
     LIBS ez::utils ez::utils::tests_config)
 
+addTest("utils::badge" badge
+    LIBS ez::utils ez::utils::tests_config)
+
