@@ -4,7 +4,7 @@
 namespace ez::utils {
 
 template<typename T, typename Arg>
-inline constexpr auto ImplicitlyConstructible = requires(Arg a, void(*f)(T)) {
+concept ImplicitlyConstructible = requires(Arg a, void(*f)(T)) {
     f(a);
 };
 
