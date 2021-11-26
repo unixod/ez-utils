@@ -33,6 +33,7 @@ else()
         -Wpedantic
         -Wshadow
         -Wsign-conversion
+        $<$<CXX_COMPILER_ID:GNU>:-fconcepts-diagnostics-depth=10>
     )
 endif()
 

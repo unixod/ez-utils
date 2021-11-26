@@ -16,3 +16,8 @@ addTest("utils::Badge" badge
 addTest("utils::match" match
     LIBS ez::utils ez::utils::tests_config)
 
+addTest("utils::generator" generator
+    LIBS ez::utils ez::utils::tests_config)
+
+addTest("type-traits" type-traits
+    LIBS ez::utils ez::utils::tests_config)
