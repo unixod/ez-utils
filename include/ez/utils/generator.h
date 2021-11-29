@@ -11,7 +11,7 @@
 namespace ez::utils {
 
 template<typename T>
-class Generator {
+class [[nodiscard]] Generator {
 public:
     class Promise;
     class Iterator;
@@ -122,19 +122,17 @@ public:
         return *this;
     }
 
-    Iterator operator++(int)
+    void operator++(int)
     {
-        assert(coroutineHandle_ && "Handle must be valid");
-        coroutineHandle_.resume();
-        return *this;
+        operator++();
     }
 
-    reference operator*()
+    reference operator*() noexcept
     {
         return coroutineHandle_.promise().getValueRef(ez::utils::Badge<Iterator>{});
     }
 
-    reference operator*() const
+    reference operator*() const noexcept
     {
         return coroutineHandle_.promise().getValueRef(ez::utils::Badge<Iterator>{});
     }

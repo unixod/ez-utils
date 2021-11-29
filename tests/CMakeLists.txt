@@ -18,6 +18,3 @@ addTest("utils::match" match
 
 addTest("utils::generator" generator
     LIBS ez::utils ez::utils::tests_config)
-
-addTest("type-traits" type-traits
-    LIBS ez::utils ez::utils::tests_config)

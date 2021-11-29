@@ -3,18 +3,21 @@
 
 #include "ez/support/std23.h"
 #include "ez/utils/generator.h"
-#include "ez/utils/type-traits.h"
 
 // Aux flag used in below classes to make teir int constructors explicit
 // (ExplicitIntCtr{true}) or non-explicit (ExplicitIntCtr{false}).
 enum struct ExplicitIntCtr : bool {};
+
+template<typename T, typename Arg>
+concept ImplicitlyConstructibleFrom = std::convertible_to<Arg, T>;
+
 
 //
 // A type to test ez::utils::Generator<TrivialBuiltinType>
 //
 using Trivial = int;
 
-static_assert(ez::utils::ImplicitlyConstructible<Trivial, int>);
+static_assert(ImplicitlyConstructibleFrom<Trivial, int>);
 static_assert(std::is_trivial_v<Trivial>);
 
 //
@@ -22,7 +25,7 @@ static_assert(std::is_trivial_v<Trivial>);
 //
 enum struct TrivialNonImplicitlyConstructibleFromInt {};
 
-static_assert(!ez::utils::ImplicitlyConstructible<TrivialNonImplicitlyConstructibleFromInt, int>);
+static_assert(!ImplicitlyConstructibleFrom<TrivialNonImplicitlyConstructibleFromInt, int>);
 static_assert(std::is_trivial_v<TrivialNonImplicitlyConstructibleFromInt>);
 
 //
@@ -47,14 +50,14 @@ private:
     int val_;
 };
 
-static_assert(ez::utils::ImplicitlyConstructible<NonDefaulConstructible<ExplicitIntCtr{false}>, int>);
+static_assert(ImplicitlyConstructibleFrom<NonDefaulConstructible<ExplicitIntCtr{false}>, int>);
 static_assert(!std::is_default_constructible_v<NonDefaulConstructible<ExplicitIntCtr{false}>>);
 static_assert(!std::is_trivial_v<NonDefaulConstructible<ExplicitIntCtr{false}>>);
 static_assert(std::is_move_constructible_v<NonDefaulConstructible<ExplicitIntCtr{false}>>);
 static_assert(std::is_move_assignable_v<NonDefaulConstructible<ExplicitIntCtr{false}>>);
 static_assert(std::is_copy_constructible_v<NonDefaulConstructible<ExplicitIntCtr{false}>>);
 static_assert(std::is_copy_assignable_v<NonDefaulConstructible<ExplicitIntCtr{false}>>);
-static_assert(!ez::utils::ImplicitlyConstructible<NonDefaulConstructible<ExplicitIntCtr{true}>, int>);
+static_assert(!ImplicitlyConstructibleFrom<NonDefaulConstructible<ExplicitIntCtr{true}>, int>);
 static_assert(!std::is_default_constructible_v<NonDefaulConstructible<ExplicitIntCtr{true}>>);
 static_assert(!std::is_trivial_v<NonDefaulConstructible<ExplicitIntCtr{true}>>);
 static_assert(std::is_move_constructible_v<NonDefaulConstructible<ExplicitIntCtr{true}>>);
@@ -90,7 +93,7 @@ private:
     int val_;
 };
 
-static_assert(ez::utils::ImplicitlyConstructible<MoveConstructibleOnly<ExplicitIntCtr{false}>, int>);
+static_assert(ImplicitlyConstructibleFrom<MoveConstructibleOnly<ExplicitIntCtr{false}>, int>);
 static_assert(!std::is_default_constructible_v<MoveConstructibleOnly<ExplicitIntCtr{false}>>);
 static_assert(!std::is_trivial_v<MoveConstructibleOnly<ExplicitIntCtr{false}>>);
 static_assert(std::is_move_constructible_v<MoveConstructibleOnly<ExplicitIntCtr{false}>>);
@@ -98,7 +101,7 @@ static_assert(!std::is_move_assignable_v<MoveConstructibleOnly<ExplicitIntCtr{fa
 static_assert(!std::is_copy_constructible_v<MoveConstructibleOnly<ExplicitIntCtr{false}>>);
 static_assert(!std::is_copy_assignable_v<MoveConstructibleOnly<ExplicitIntCtr{false}>>);
 
-static_assert(!ez::utils::ImplicitlyConstructible<MoveConstructibleOnly<ExplicitIntCtr{true}>, int>);
+static_assert(!ImplicitlyConstructibleFrom<MoveConstructibleOnly<ExplicitIntCtr{true}>, int>);
 static_assert(!std::is_default_constructible_v<MoveConstructibleOnly<ExplicitIntCtr{true}>>);
 static_assert(!std::is_trivial_v<MoveConstructibleOnly<ExplicitIntCtr{true}>>);
 static_assert(std::is_move_constructible_v<MoveConstructibleOnly<ExplicitIntCtr{true}>>);
@@ -126,7 +129,7 @@ TEMPLATE_LIST_TEST_CASE("Generate sequence using Generator<T>", "", TestTypeSet)
 {
     auto iota = [](int cnt) -> ez::utils::Generator<TestType> {
         for (auto i = 0; i < cnt; ++i) {
-            if constexpr (ez::utils::ImplicitlyConstructible<TestType, int>) {
+            if constexpr (ImplicitlyConstructibleFrom<TestType, int>) {
                 co_yield i;
             }
             else {
