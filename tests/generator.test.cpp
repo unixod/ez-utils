@@ -119,13 +119,22 @@ using Test_type_set = std::tuple<
     Move_constructible_only<Explicit_int_ctr{true}>
 >;
 
-TEMPLATE_LIST_TEST_CASE("ez::utils::Generate<T> is an input range", "", Test_type_set)
+TEMPLATE_LIST_TEST_CASE("ez::utils::Generator<T> is an input range", "", Test_type_set)
 {
     using G = ez::utils::Generator<TestType>;
     STATIC_REQUIRE(std::ranges::input_range<G>);
 }
 
-TEMPLATE_LIST_TEST_CASE("Generate sequence using Generator<T>", "", Test_type_set)
+TEMPLATE_LIST_TEST_CASE("co_return void", "", Test_type_set)
+{
+    auto foo = []() -> ez::utils::Generator<TestType> {
+        co_return;
+    };
+
+    REQUIRE(std::ranges::equal(foo(), std::views::empty<TestType>));
+}
+
+TEMPLATE_LIST_TEST_CASE("co_yield values", "", Test_type_set)
 {
     auto iota = [](int cnt) -> ez::utils::Generator<TestType> {
         for (auto i = 0; i < cnt; ++i) {

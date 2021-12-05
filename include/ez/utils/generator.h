@@ -84,6 +84,9 @@ public:
         return {};
     }
 
+    void return_void() const noexcept
+    {}
+
     [[noreturn]]
     void unhandled_exception()
     {

@@ -119,13 +119,22 @@ using Test_type_set = std::tuple<
     Move_constructible_only<Explicit_int_ctr{true}>
 >;
 
-TEMPLATE_LIST_TEST_CASE("ez::utils::Generate<T> is an input range", "", Test_type_set)
+TEMPLATE_LIST_TEST_CASE("ez::utils::Recursive_generator<T> is an input range", "", Test_type_set)
 {
     using G = ez::utils::Recursive_generator<TestType>;
     STATIC_REQUIRE(std::ranges::input_range<G>);
 }
 
-TEMPLATE_LIST_TEST_CASE("Generate sequence using Generator<T>", "", Test_type_set)
+TEMPLATE_LIST_TEST_CASE("co_return void", "", Test_type_set)
+{
+    auto foo = []() -> ez::utils::Recursive_generator<TestType> {
+        co_return;
+    };
+
+    REQUIRE(std::ranges::equal(foo(), std::views::empty<TestType>));
+}
+
+TEMPLATE_LIST_TEST_CASE("co_yield values (no nested generators)", "", Test_type_set)
 {
     auto iota = [](int cnt) -> ez::utils::Recursive_generator<TestType> {
         for (auto i = 0; i < cnt; ++i) {
@@ -152,4 +161,43 @@ TEMPLATE_LIST_TEST_CASE("Generate sequence using Generator<T>", "", Test_type_se
 
     REQUIRE(std::ranges::equal(iota(cnt), expected_seq));
 }
+
+TEST_CASE("co_yeild values with nested generators")
+{
+    auto aaa = []() -> ez::utils::Recursive_generator<std::string_view> {
+        co_yield "aaa-1";
+        co_yield "aaa-2";
+    };
+
+    auto bbb = []() -> ez::utils::Recursive_generator<std::string_view> {
+        co_yield "bbb-1";
+        co_yield "bbb-2";
+        co_yield "bbb-3";
+    };
+
+    auto eee = []() -> ez::utils::Recursive_generator<std::string_view> {
+        co_return;
+    };
+
+    auto aaa_eee_foo_bbb = [&]() -> ez::utils::Recursive_generator<std::string_view> {
+        co_yield aaa();
+        co_yield eee();
+        co_yield "foo";
+        co_yield bbb();
+    };
+
+    auto expected_seq = {
+        "aaa-1",
+        "aaa-2",
+        "foo",
+        "bbb-1",
+        "bbb-2",
+        "bbb-3"
+    };
+
+    REQUIRE(std::ranges::equal(aaa_eee_foo_bbb(), expected_seq));
+}
+
+
+
 

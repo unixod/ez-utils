@@ -169,7 +169,7 @@ public:
 
     template<typename U>
     requires (!std::same_as<std::remove_cvref_t<U>, Recursive_generator>)
-        std::suspend_always yield_value(U&& val)
+    std::suspend_always yield_value(U&& val)
     {
         assert(generator_);
 
@@ -179,7 +179,7 @@ public:
 
     template<typename G>
     requires std::same_as<std::remove_cvref_t<G>, Recursive_generator>
-        Awaiter yield_value(G&& nested_seq)
+    Awaiter yield_value(G&& nested_seq)
     {
         assert(generator_);
 
@@ -218,6 +218,9 @@ public:
 
         return {Awaiter::Suspend{true}};
     }
+
+    void return_void() const noexcept
+    {}
 
     [[noreturn]]
     void unhandled_exception()
