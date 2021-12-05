@@ -160,4 +160,4 @@ private:
 
 } // namespace ez::utils
 
-#endif // EZ_UTILS_BADGE_H
+#endif // EZ_UTILS_GENERATOR_H

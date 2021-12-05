@@ -18,3 +18,6 @@ addTest("utils::match" match
 
 addTest("utils::generator" generator
     LIBS ez::utils ez::utils::tests_config)
+
+addTest("utils::recursive_generator" recursive_generator
+    LIBS ez::utils ez::utils::tests_config)

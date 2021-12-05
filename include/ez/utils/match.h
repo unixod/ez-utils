@@ -29,4 +29,4 @@ constexpr decltype(auto) match(Variant&& v, Callable&&... func)
 
 } // namespace ez::utils
 
-#endif // EZ_UTILS_UTILS_H
+#endif // EZ_UTILS_MATCH_H
