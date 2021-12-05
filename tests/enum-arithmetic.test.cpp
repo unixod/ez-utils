@@ -5,7 +5,7 @@
 enum class A {};
 
 template<>
-struct ez::utils::EnableEnumArithmeticFor<A>{};
+inline constexpr bool ez::utils::enable_enum_arithmetic<A> = true;
 
 TEST_CASE("Arithmetic")
 {

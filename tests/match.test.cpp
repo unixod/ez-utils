@@ -7,16 +7,16 @@
 namespace {
 
 template<typename T>
-struct TypeAsValue {
+struct Type_as_value {
     template<typename U>
-    constexpr bool operator == (TypeAsValue<U>) const noexcept
+    constexpr bool operator == (Type_as_value<U>) const noexcept
     {
         return std::is_same_v<T, U>;
     }
 };
 
 template<typename T>
-constexpr auto tv = TypeAsValue<T>{};
+constexpr auto tv = Type_as_value<T>{};
 
 } // namespace <anonymous>
 
@@ -82,18 +82,18 @@ TEMPLATE_TEST_CASE("Return value type", "[match]", int, int&, int&&, /*const int
 
     std::variant<Foo> v;
 
-    using HandlerReturnType = TestType;
+    using Handler_return_type = TestType;
 
-    using MatchResultType =
+    using Match_result_type =
         decltype(
             ez::utils::match(v,
-                [](Foo) -> HandlerReturnType {
+                [](Foo) -> Handler_return_type {
                     throw std::runtime_error{"No need implementation for this test case"};
                 }
             )
         );
 
-    static_assert(std::is_same_v<MatchResultType, HandlerReturnType>);
+    static_assert(std::is_same_v<Match_result_type, Handler_return_type>);
 }
 
 

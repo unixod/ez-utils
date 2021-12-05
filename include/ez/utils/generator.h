@@ -18,8 +18,8 @@ public:
     using promise_type = Promise;
 
 public:
-    Generator(std::coroutine_handle<Promise> coroutineHandle, ez::utils::Badge<Promise>)
-        : coroutineHandle_{std::move(coroutineHandle)}
+    Generator(std::coroutine_handle<Promise> coroutine_handle, ez::utils::Badge<Promise>)
+        : coroutine_handle_{std::move(coroutine_handle)}
     {}
 
     Generator(Generator&&) = delete;
@@ -28,13 +28,13 @@ public:
     Generator& operator = (const Generator&) = delete;
     ~Generator()
     {
-        assert(coroutineHandle_);
-        coroutineHandle_.destroy();
+        assert(coroutine_handle_);
+        coroutine_handle_.destroy();
     }
 
     auto begin()
     {
-        return Iterator{coroutineHandle_, ez::utils::Badge<Generator>{}};
+        return Iterator{coroutine_handle_, ez::utils::Badge<Generator>{}};
     }
 
     auto end()
@@ -43,7 +43,7 @@ public:
     }
 
 private:
-    std::coroutine_handle<Promise> coroutineHandle_;
+    std::coroutine_handle<Promise> coroutine_handle_;
 };
 
 template<typename T>
@@ -90,7 +90,7 @@ public:
         throw;
     }
 
-    T& getValueRef(ez::utils::Badge<Generator::Iterator>)
+    T& get_value_ref(ez::utils::Badge<Generator::Iterator>)
     {
         assert(value_);
         return *value_;
@@ -111,14 +111,14 @@ public:
 
 public:
 
-    Iterator(std::coroutine_handle<Promise> coroutineHandle, ez::utils::Badge<Generator>)
-        : coroutineHandle_{std::move(coroutineHandle)}
+    Iterator(std::coroutine_handle<Promise> coroutine_handle, ez::utils::Badge<Generator>)
+        : coroutine_handle_{std::move(coroutine_handle)}
     {}
 
     Iterator& operator++()
     {
-        assert(coroutineHandle_ && "Handle must be valid");
-        coroutineHandle_.resume();
+        assert(coroutine_handle_ && "Handle must be valid");
+        coroutine_handle_.resume();
         return *this;
     }
 
@@ -129,18 +129,18 @@ public:
 
     reference operator*() noexcept
     {
-        return coroutineHandle_.promise().getValueRef(ez::utils::Badge<Iterator>{});
+        return coroutine_handle_.promise().get_value_ref(ez::utils::Badge<Iterator>{});
     }
 
     reference operator*() const noexcept
     {
-        return coroutineHandle_.promise().getValueRef(ez::utils::Badge<Iterator>{});
+        return coroutine_handle_.promise().get_value_ref(ez::utils::Badge<Iterator>{});
     }
 
     bool operator == (std::default_sentinel_t) const noexcept
     {
-        assert(coroutineHandle_ && "Handle must be valid");
-        return coroutineHandle_.done();
+        assert(coroutine_handle_ && "Handle must be valid");
+        return coroutine_handle_.done();
     }
 
 public:
@@ -155,7 +155,7 @@ public:
     Iterator() /*no definition & not deleted/defaulted intentionally*/;
 
 private:
-    std::coroutine_handle<Promise> coroutineHandle_;
+    std::coroutine_handle<Promise> coroutine_handle_;
 };
 
 } // namespace ez::utils

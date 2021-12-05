@@ -13,17 +13,17 @@ TEST_CASE("Input character sequence starts with integer lexeme")
     );
 
     std::uint8_t i8num = 0;
-    auto end = ez::utils::cstrToUint(str, i8num);
+    auto end = ez::utils::cstr_to_uint(str, i8num);
     REQUIRE(str != end);
     REQUIRE(i8num == 27);
 
     std::uint16_t i16num = 0;
-    end = ez::utils::cstrToUint(str, i16num);
+    end = ez::utils::cstr_to_uint(str, i16num);
     REQUIRE(str != end);
     REQUIRE(i16num == 27993);
 
     std::uint32_t i32num = 0;
-    end = ez::utils::cstrToUint(str, i32num);
+    end = ez::utils::cstr_to_uint(str, i32num);
     REQUIRE(str != end);
     REQUIRE(i32num == 2799345);
 }
@@ -40,17 +40,17 @@ TEST_CASE("Input character sequence doesn't start with integer lexeme")
     );
 
     std::uint8_t i8num = 0;
-    auto end = ez::utils::cstrToUint(str, i8num);
+    auto end = ez::utils::cstr_to_uint(str, i8num);
     REQUIRE(str == end);
     REQUIRE(i8num == 0);
 
     std::uint16_t i16num = 0;
-    end = ez::utils::cstrToUint(str, i16num);
+    end = ez::utils::cstr_to_uint(str, i16num);
     REQUIRE(str == end);
     REQUIRE(i16num == 0);
 
     std::uint32_t i32num = 0;
-    end = ez::utils::cstrToUint(str, i32num);
+    end = ez::utils::cstr_to_uint(str, i32num);
     REQUIRE(str == end);
     REQUIRE(i32num == 0);
 }
