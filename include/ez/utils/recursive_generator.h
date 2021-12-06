@@ -122,7 +122,6 @@ private:
         leaf_coroutine_ = std::exchange(nested_seq.leaf_coroutine_, nullptr);
     }
 
-
     template<typename U>
         requires std::same_as<U, Iterator> || std::same_as<U, Promise>
     [[nodiscard]]
@@ -156,7 +155,10 @@ private:
 };
 
 
-// FIXME: Move to the Recursive_generator or hide under details_ namespace;
+namespace details_ {
+
+// FIXME: Move this class to Promise (make it nested). For some reason GCC 11.2.0,
+// doesn't compile the source if this class is defined as a nested within Promise.
 struct Awaiter {
     enum class Suspend : bool {};
 
@@ -171,6 +173,7 @@ struct Awaiter {
     constexpr void await_resume() const noexcept {}
 };
 
+} // namespace details_
 
 template<typename T>
 class Recursive_generator<T>::Promise {
@@ -202,8 +205,10 @@ public:
 
     template<typename G>
         requires std::same_as<std::remove_cvref_t<G>, Recursive_generator>
-    Awaiter yield_value(G&& nested_seq)
+    details_::Awaiter yield_value(G&& nested_seq)
     {
+        using details_::Awaiter;
+
         assert(generator_ptr);
 
         if (nested_seq.is_at_end_()) {

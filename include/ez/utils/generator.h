@@ -18,11 +18,11 @@ public:
     using promise_type = Promise;
 
 public:
-    Generator(std::coroutine_handle<Promise> coroutine_handle, ez::utils::Badge<Promise>)
+    Generator(std::coroutine_handle<Promise> coroutine_handle, ez::utils::Badge<Promise>) noexcept
         : coroutine_handle_{std::move(coroutine_handle)}
     {}
 
-    Generator(Generator&&) = delete;
+    Generator(Generator&&) = default;
     Generator(const Generator&) = delete;
     Generator& operator = (Generator&&) = delete;
     Generator& operator = (const Generator&) = delete;
@@ -93,6 +93,7 @@ public:
         throw;
     }
 
+    [[nodiscard]]
     T& get_value_ref(ez::utils::Badge<Generator::Iterator>)
     {
         assert(value_);
@@ -100,6 +101,7 @@ public:
     }
 
 private:
+    // TODO: Read todo for Recursive_generator::value_ and do the same thing.
     std::optional<T> value_;
 };
 
