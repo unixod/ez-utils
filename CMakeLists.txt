@@ -27,18 +27,16 @@ if(EZ_UTILS_STANDALONE AND NOT DEFINED CMAKE_CXX_STANDARD)
     set(CMAKE_CXX_EXTENSIONS OFF)
 endif()
 
-option(EZ_UTILS_INSTALL "Enable installation of ez-utils target" EZ_UTILS_STANDALONE)
-
 ##############################################################################
 # Fetch dependencies
 ##############################################################################
 include(FetchContent)
 
 FetchContent_Declare(ez-support
-    GIT_REPOSITORY git@github.com:unixod/ez-support.git
-    GIT_TAG 090ec3b07569c87e3647698b4d0fcc67e73ffa18
-    GIT_SHALLOW On
-)
+    GIT_REPOSITORY https://github.com/unixod/ez-support.git
+    GIT_TAG d1b4395b8b32da282f2520b735558008d8ee15d4
+    GIT_SHALLOW On)
+
 FetchContent_MakeAvailable(ez-support)
 
 ##############################################################################
@@ -52,17 +50,23 @@ add_library(ez::utils ALIAS ez_utils)
 target_include_directories(ez_utils
     INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/include>)
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 target_link_libraries(ez_utils
     INTERFACE
     ez::utils::compile_options
     ez::support)
 
-if(EZ_SUPPORT_INSTALL)
-    install(TARGETS ez_support)
-    install(DIRECTORY include DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-endif()
+install(DIRECTORY include/ez TYPE INCLUDE)
+install(TARGETS ez_utils EXPORT ez-utils)
+set_target_properties(ez_utils
+    PROPERTIES
+    EXPORT_NAME utils)
+
+install(EXPORT ez-utils
+    NAMESPACE ez::
+    DESTINATION lib/ez
+    FILE utils.cmake)
 
 ##############################################################################
 # Setup unit tests
