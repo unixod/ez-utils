@@ -34,7 +34,7 @@ include(FetchContent)
 
 FetchContent_Declare(ez-support
     GIT_REPOSITORY https://github.com/unixod/ez-support.git
-    GIT_TAG d1b4395b8b32da282f2520b735558008d8ee15d4
+    GIT_TAG 9e3e547f78a5d3917985cb50633000618809b894
     GIT_SHALLOW On)
 
 FetchContent_MakeAvailable(ez-support)
@@ -58,15 +58,11 @@ target_link_libraries(ez_utils
     ez::support)
 
 install(DIRECTORY include/ez TYPE INCLUDE)
-install(TARGETS ez_utils EXPORT ez-utils)
+install(TARGETS ez_utils EXPORT ez-libs)
 set_target_properties(ez_utils
     PROPERTIES
     EXPORT_NAME utils)
 
-install(EXPORT ez-utils
-    NAMESPACE ez::
-    DESTINATION lib/ez
-    FILE utils.cmake)
 
 ##############################################################################
 # Setup unit tests

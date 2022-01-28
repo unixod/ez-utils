@@ -39,7 +39,7 @@ endif()
 
 target_compile_features(ez_utils_compile_options INTERFACE cxx_std_20)
 
-install(TARGETS ez_utils_compile_options EXPORT ez-utils)
+install(TARGETS ez_utils_compile_options EXPORT ez-libs)
 set_target_properties(ez_utils_compile_options
     PROPERTIES
     EXPORT_NAME utils_compile_options)
