@@ -34,7 +34,7 @@ include(FetchContent)
 
 FetchContent_Declare(ez-support
     GIT_REPOSITORY https://github.com/unixod/ez-support.git
-    GIT_TAG 9e3e547f78a5d3917985cb50633000618809b894
+    GIT_TAG e1157da0d3ce2a253aabd63d72cd50e9404067a6
     GIT_SHALLOW On)
 
 FetchContent_MakeAvailable(ez-support)
