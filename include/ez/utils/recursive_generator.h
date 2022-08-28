@@ -151,6 +151,8 @@ private:
     // TODO: Think about more sophisticated storage type to get an ability to store either
     // a pointer to yeilded value (in case of co_yield [non-const-lvalue|rvalue]) or a value
     // itself (in case of co_yield const-lvalue).
+    // See https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2168r1.pdf (the section
+    // "How to store the yielded value in the promise type?").
     std::optional<T> value_;
 };
 

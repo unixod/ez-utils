@@ -69,6 +69,8 @@ public:
 
     std::suspend_always yield_value(T&& val)
     {
+        // By move assigning we avoid T::~T() which may occur
+        // in case of std::optional<T>::emplace.
         if constexpr (std::is_move_assignable_v<T>) {
             value_ = std::move(val);
         }
