@@ -6,8 +6,8 @@ include(FetchContent)
 # Fetch dependencies
 ###########################################
 FetchContent_Declare(ez-catch
-    GIT_REPOSITORY git@github.com:unixod/ez-catch.git
-    GIT_TAG 7e58663ab2ace81cd839c92f4ba804606847403e
+    GIT_REPOSITORY https://github.com/unixod/ez-catch.git
+    GIT_TAG v3.2.1
     GIT_SHALLOW On
 )
 
