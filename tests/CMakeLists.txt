@@ -1,10 +1,10 @@
-addTest("utils::toSigned" to-signed
+addTest("utils::to_signed" to-signed
     LIBS ez::utils ez::utils::tests_config)
 
-addTest("utils::toUnsigned" to-unsigned
+addTest("utils::to_unsigned" to-unsigned
     LIBS ez::utils ez::utils::tests_config)
 
-addTest("utils::cstrToUint" cstr-to-uint
+addTest("utils::cstr_to_uint" cstr-to-uint
     LIBS ez::utils ez::utils::tests_config)
 
 addTest("utils::enum_arithmetic" enum-arithmetic

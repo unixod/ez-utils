@@ -27,6 +27,18 @@ public:
     }
 };
 
+TEST_CASE("ez::utils::Badge is not aggregate")
+{
+    // Until C++20 ez::utils::Badge<X> (assuming no user provided specializations) due to its
+    // defaulted default constructor is treated as aggregate class which in turn enables
+    // to instantiate it outside of the context of X via aggregate initialization:
+    //   ez::utils::Badge<X>{}
+    // which breaks the overall idea behind Badge. Starting from C++20 ez::utils::Badge isn't
+    // anymore aggregate.
+    // For more info read: https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1008r1.pdf
+    STATIC_CHECK(!std::is_aggregate_v<ez::utils::Badge<Bar>>);
+    STATIC_CHECK(std::is_trivial_v<ez::utils::Badge<Bar>>);
+}
 
 TEST_CASE("Bar can call Foo::method_for_bar")
 {
