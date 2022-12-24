@@ -11,7 +11,7 @@ struct Overload : Callable... {
 };
 
 template<typename...>
-constexpr bool instantiation_guard = false;
+constexpr bool always_false = false;
 
 template<typename Variant, typename... Callable>
 constexpr decltype(auto) match(Variant&& v, Callable&&... func)
@@ -20,7 +20,7 @@ constexpr decltype(auto) match(Variant&& v, Callable&&... func)
         Overload{
             std::forward<Callable>(func)...,
             [](auto... x) {
-                static_assert(instantiation_guard<decltype(x)...>, "Not all alternatives are handled");
+                static_assert(always_false<decltype(x)...>, "Not all alternatives are handled");
             }
         },
         std::forward<Variant>(v)
