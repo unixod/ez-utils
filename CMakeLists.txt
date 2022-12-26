@@ -36,6 +36,11 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 include(dependencies.cmake)
 include(compile-options.cmake)
 
+# Enable custom build configurations
+if (EZ_UTILS_STANDALONE)
+    ez_common_enable_build_profile_debug_with_ubasan()
+endif()
+
 ##############################################################################
 # Setup ez::utils target
 ##############################################################################
