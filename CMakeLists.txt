@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
 
-project(ez-utils
-    VERSION 1.2.1
-    LANGUAGES CXX
-)
+project(ez-utils)
 
 include(GNUInstallDirs)
 include(CMakeDependentOption)
