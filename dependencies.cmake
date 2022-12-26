@@ -4,13 +4,13 @@ include(FetchContent)
 
 FetchContent_Declare(ez-common
     GIT_REPOSITORY https://github.com/unixod/ez-common.git
-    GIT_TAG v1.1.0
+    GIT_TAG v1.2.0
     GIT_SHALLOW On
 )
 
 FetchContent_Declare(ez-support
     GIT_REPOSITORY https://github.com/unixod/ez-support.git
-    GIT_TAG v1.0.1
+    GIT_TAG v1.1.1
     GIT_SHALLOW On
 )
 
