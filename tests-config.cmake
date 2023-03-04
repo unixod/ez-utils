@@ -1,7 +1,7 @@
 include_guard()
 
 ###############################################################################
-# Define ez::tests_config
+# Define ez::utils::tests_config
 ###############################################################################
 
 add_library(ez_utils_tests_config INTERFACE)

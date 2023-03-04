@@ -1,5 +1,5 @@
-#include "ez/utils/badge.h"
 #include <catch2/catch_all.hpp>
+#include <ez/utils/badge.h>
 
 class Bar;
 

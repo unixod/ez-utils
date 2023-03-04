@@ -1,8 +1,8 @@
 #include <catch2/catch_all.hpp>
 #include <ranges>
 
-#include "ez/support/std23.h"
-#include "ez/utils/recursive_generator.h"
+#include <ez/support/std23.h>
+#include <ez/utils/recursive_generator.h>
 
 // Aux flag used in below classes to make teir int constructors explicit
 // (Explicit_int_ctr{true}) or non-explicit (Explicit_int_ctr{false}).

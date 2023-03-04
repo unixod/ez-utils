@@ -1,6 +1,6 @@
-#include "ez/utils/enum-arithmetic.h"
 #include <catch2/catch_all.hpp>
 #include <catch2/generators/catch_generators_range.hpp>
+#include <ez/utils/enum-arithmetic.h>
 
 enum class A {};
 

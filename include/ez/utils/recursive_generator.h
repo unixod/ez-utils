@@ -6,8 +6,8 @@
 #include <iterator>
 #include <ranges>
 
-#include "ez/support/std23.h"
-#include "ez/utils/badge.h"
+#include <ez/support/std23.h>
+#include <ez/utils/badge.h>
 
 namespace ez::utils {
 

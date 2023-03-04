@@ -6,7 +6,7 @@
 #include <iterator>
 #include <ranges>
 
-#include "ez/utils/badge.h"
+#include <ez/utils/badge.h>
 
 namespace ez::utils {
 
