@@ -23,7 +23,9 @@ public:
     template<typename X>
     auto call(X x)
     {
-        x.method_for_bar(ez::utils::Badge<Bar>{});
+        using Bar_ = std::enable_if_t<std::same_as<X, X>, Bar>;
+
+        x.method_for_bar(ez::utils::Badge<Bar_>{});
     }
 };
 

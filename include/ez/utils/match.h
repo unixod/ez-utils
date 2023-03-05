@@ -2,6 +2,7 @@
 #define EZ_UTILS_MATCH_H
 
 #include <variant>
+#include <ez/support/definitions.h>
 
 namespace ez::utils {
 
@@ -9,6 +10,12 @@ template<typename... Callable>
 struct Overload : Callable... {
     using Callable::operator()...;
 };
+
+// TODO: Remove the entire ifdef once clang manages to compile Overloa without deduction guidance.
+#ifdef __clang__
+template<typename... Callable>
+Overload(Callable...) -> Overload<Callable...>;
+#endif
 
 template<typename...>
 constexpr bool always_false = false;
