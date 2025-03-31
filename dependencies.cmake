@@ -10,7 +10,7 @@ FetchContent_Declare(ez-common
 
 FetchContent_Declare(ez-support
     GIT_REPOSITORY https://github.com/unixod/ez-support.git
-    GIT_TAG v1.1.1
+    GIT_TAG v1.1.2
     GIT_SHALLOW On
 )
 
