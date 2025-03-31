@@ -1,8 +1,13 @@
-#include <catch2/catch_all.hpp>
 #include <ranges>
+#include <utility>
+
+#include <catch2/catch_template_test_macros.hpp>
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators_all.hpp>
 
 #include <ez/support/std23.h>
 #include <ez/utils/generator.h>
+
 
 // Aux flag used in below classes to make teir int constructors explicit
 // (Explicit_int_ctr{true}) or non-explicit (Explicit_int_ctr{false}).

@@ -1,5 +1,6 @@
-#include <catch2/catch_all.hpp>
 #include <ranges>
+
+#include <catch2/catch_all.hpp>
 
 #include <ez/support/std23.h>
 #include <ez/utils/recursive_generator.h>

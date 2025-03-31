@@ -1,8 +1,12 @@
-#include <catch2/catch_all.hpp>
-#include <variant>
 #include <string>
-#include <ez/utils/match.h>
+#include <variant>
+
+#include <catch2/catch_template_test_macros.hpp>
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators_adapters.hpp>
+
 #include <ez/support/std23.h>
+#include <ez/utils/match.h>
 
 namespace {
 

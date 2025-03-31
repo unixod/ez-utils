@@ -1,5 +1,6 @@
-#include <catch2/catch_all.hpp>
+#include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators_range.hpp>
+
 #include <ez/utils/type-conversion.h>
 
 TEST_CASE("Input character sequence starts with integer lexeme")
